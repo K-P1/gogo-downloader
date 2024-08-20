@@ -1,0 +1,14 @@
+-fix the download function allowing it to be easily callable to download a certain file
+-or make another function that will automatically download all files that end with failed download
+-save the downloaded files into another folder, preferably downloads or video folder
+-retry failed download before scraping link for the next download
+-delete failed download file after successful retry
+-fix failed download and check for fails using file size
+-make this possible 1,5-8
+-fix how failed download works generally, most times the amount of files we have pending wont allow the retry download ever run plus the script rearly ends on it own its always ended or interuptd by network
+-maybe after each season download it checks if all the files are present then retry downloading any missing or null files. use the dl links to avoid rescraping.
+-change how the naming works file names are too long and not in English try working with nicknames ore just shorten the names
+-put the downloaded files in a downloads folder, that will clean things up a bit
+-external folder had the main English anime name the inside that the seasons can have the japanese names
+-there may be a chance that some 0byte downloads failed because the dl link was not available so confirm its being scraped while fixing
+-from my test it actually gets the download link but its like its an invalid link, that's why the download fails. when i paste the link to a browser i get no download response.
