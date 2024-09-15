@@ -96,8 +96,6 @@ By using this script, you acknowledge that you have read, understood, and agree 
 
 ---
 
-Feel free to adjust it based on your needs!
-
 Contact
 -------
 For any issues or questions, please contact [Ayokunlegaye@gmail.com].
