@@ -1,14 +1,30 @@
--fix the download function allowing it to be easily callable to download a certain file
--or make another function that will automatically download all files that end with failed download
--save the downloaded files into another folder, preferably downloads or video folder
--retry failed download before scraping link for the next download
--delete failed download file after successful retry
--fix failed download and check for fails using file size
--make this possible 1,5-8
--fix how failed download works generally, most times the amount of files we have pending wont allow the retry download ever run plus the script rearly ends on it own its always ended or interuptd by network
--maybe after each season download it checks if all the files are present then retry downloading any missing or null files. use the dl links to avoid rescraping.
--change how the naming works file names are too long and not in English try working with nicknames ore just shorten the names
--put the downloaded files in a downloads folder, that will clean things up a bit
--external folder had the main English anime name the inside that the seasons can have the japanese names
--there may be a chance that some 0byte downloads failed because the dl link was not available so confirm its being scraped while fixing
--from my test it actually gets the download link but its like its an invalid link, that's why the download fails. when i paste the link to a browser i get no download response.
+Version One:
+    -Basic batch downloader for animes from gogoanime.con
+    -Runs on headless mode
+    -Added a download progress bar
+    -Added download list function, with can be used to queue multiple downloads
+    -Major bugs fixed from beta version
+
+Version Two:
+    -Minor bugs fixed
+    -Fixed line part empty error
+    -Fixed 0byte null file download
+    -Added nickname function now save name can be selected diffrent from the japanese file name.
+    -Added multiple file checks to ensure failed download are promptly redownloaded.
+    -Added failed download tracker
+    -Added auto update download list
+    -Added retry function
+    -Optimized execution method
+    -Added temp folder to store temporary files
+    -Improved clean-up after download
+
+Version Three:
+    -Simplified the code
+    -Bugs fixed
+    -Optimized code and execution
+    -Improved feedback prompt
+    -Added download list guide
+    -Auto create download list file
+    -Improved speed and efficiency
+    -Improved episode parser
+    -Moved downloaded files to system download folder
