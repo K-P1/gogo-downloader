@@ -86,12 +86,14 @@ class DownloadLinkExtractor:
         print("DRIVER CLOSED.\n")
 
     def file_check(self):
+        print("first check for null downloads...")
         null_dl = [file.split('.')[0] for file in os.listdir(self.dest) 
                    if os.path.getsize(os.path.join(self.dest, file)) < 20]
         if null_dl:
-            self.retry_failed_downloads(null_dl)
+            print("null file dectected, redownloading...\n")
+            self.retry_null_downloads(null_dl)
 
-    def retry_failed_downloads(self, null_dl):
+    def retry_null_downloads(self, null_dl):
         self.epi = ','.join(null_dl)
         self.driver = self.setup_driver()
         self.download_links(os.getenv('EMAIL'), os.getenv('PASSWORD'))
@@ -164,7 +166,9 @@ class DownloadLinkExtractor:
                 file.truncate()
 
     def retry(self):
+        print("first check for failed downloads...")
         if self.failed_downloads and os.path.exists(self.failed_file_path):
+            print("failed download dectected, retrying...\n")
             with open(self.failed_file_path, 'r') as file:
                 lines = file.readlines()
             os.remove(self.failed_file_path)
@@ -235,7 +239,8 @@ class DownloadLinkExtractor:
                     if line.strip() != "Save-name Anime-name Episode":
                         parts = line.split()
                         if len(parts) in [2, 3]:
-                            nickname, keyword, epi = (parts + [parts[0]])[:3]
+                            modified_parts = ([parts[0]] + parts) if len(parts) < 3 else parts
+                            nickname, keyword, epi = modified_parts
                             extractor = DownloadLinkExtractor(keyword, nickname, 3, epi)
                             extractor.download_links(email, password)
                             extractor.download()
