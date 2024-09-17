@@ -34,11 +34,7 @@ class DownloadLinkExtractor:
         driver_path = r'.\geckodriver.exe'
         service = FirefoxService(executable_path=driver_path)
         return webdriver.Firefox(service=service, options=options)
-
-    def fetch_content(self, url):
-        self.driver.get(url)
-        return self.driver.page_source
-        
+            
     def login(self, email, password):
         print("Attempting to login...")
         self.fetch_content('https://anitaku.pe/login.html')
@@ -46,6 +42,23 @@ class DownloadLinkExtractor:
         self.driver.find_element(By.NAME, 'password').send_keys(password)
         self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
         print("Logged in successfully.\n")
+    
+    def scrape_links(self):
+        print("Scraping initiated ETA: 5sec/episode (First episode takes longer)")
+        for episode in tqdm(self.parse_episodes(), desc=f"Scraping {self.nickname} link(s)", unit="episode"):
+            self.episode = episode
+            url = f'https://anitaku.pe/{self.keyword}-episode-{episode}'
+            self.get_link(self.fetch_content(url))
+
+    def parse_episodes(self):
+        episodes = []
+        for part in self.epi.replace('.', ',').replace('&', ',').split(','):
+            if '-' in part:
+                start, end = map(int, part.split('-'))
+                episodes.extend(range(start, end + 1))
+            else:
+                episodes.append(int(part))
+        return episodes
 
     def get_link(self, content):
         soup = BeautifulSoup(content, 'html.parser')
@@ -57,48 +70,26 @@ class DownloadLinkExtractor:
         except IndexError:
             print(f"Error: Download link not found for episode {self.episode}.")
 
+    def fetch_content(self, url):
+        self.driver.get(url)
+        return self.driver.page_source
+
     def save_links(self):
         print("\nSaving links...")
         os.makedirs(r'.\temp', exist_ok=True)
         with open(self.links, 'w') as file:
             file.writelines(self.episode_list)
         print("links saved.\n")
-    
-    def parse_episodes(self):
-        episodes = []
-        for part in self.epi.replace('.', ',').replace('&', ',').split(','):
-            if '-' in part:
-                start, end = map(int, part.split('-'))
-                episodes.extend(range(start, end + 1))
-            else:
-                episodes.append(int(part))
-        return episodes
-    
-    def scrape_links(self):
-        print("Scraping initiated ETA: 5sec/episode (First episode takes longer)")
-        for episode in tqdm(self.parse_episodes(), desc=f"Scraping {self.nickname} link(s)", unit="episode"):
-            self.episode = episode
-            url = f'https://anitaku.pe/{self.keyword}-episode-{episode}'
-            self.get_link(self.fetch_content(url))
 
     def close_driver(self):
         self.driver.quit()
         print("DRIVER CLOSED.\n")
 
-    def file_check(self):
-        print("first check for null downloads...")
-        null_dl = [file.split('.')[0] for file in os.listdir(self.dest) 
-                   if os.path.getsize(os.path.join(self.dest, file)) < 20]
-        if null_dl:
-            print("null file dectected, redownloading...\n")
-            self.retry_null_downloads(null_dl)
-
-    def retry_null_downloads(self, null_dl):
-        self.epi = ','.join(null_dl)
-        self.driver = self.setup_driver()
-        self.download_links(os.getenv('EMAIL'), os.getenv('PASSWORD'))
-        self.download()
-        self.update_dl_list()
+    def download_links(self, email, password):
+        self.login(email, password)
+        self.scrape_links()
+        self.save_links()
+        self.close_driver()
 
     def download(self):
         print("Downloading...")
@@ -145,13 +136,6 @@ class DownloadLinkExtractor:
         path = rf"{self.dest}\{filename}"
         return [url, showname, path]
 
-    def update_dl_list(self):
-        with open('dl_list.txt', 'r+') as file:
-            lines = file.readlines()
-            file.seek(0)
-            file.writelines(line for line in lines if not (self.keyword in line and self.epi in line))
-            file.truncate()
-
     def failed_dl_tracker(self, condition, value):
         if condition:
             self.failed_downloads.append(value)
@@ -166,7 +150,7 @@ class DownloadLinkExtractor:
                 file.truncate()
 
     def retry(self):
-        print("first check for failed downloads...")
+        print("first check: for failed downloads...")
         if self.failed_downloads and os.path.exists(self.failed_file_path):
             print("failed download dectected, retrying...\n")
             with open(self.failed_file_path, 'r') as file:
@@ -202,11 +186,27 @@ class DownloadLinkExtractor:
         else:
             print("No failed downloads detected, running second check now...\n")
 
-    def download_links(self, email, password):
-        self.login(email, password)
-        self.scrape_links()
-        self.save_links()
-        self.close_driver()
+    def file_check(self):
+        print("second check: for null downloads...")
+        null_dl = [file.split('.')[0] for file in os.listdir(self.dest) 
+                   if os.path.getsize(os.path.join(self.dest, file)) < 20]
+        if null_dl:
+            print("null file dectected, redownloading...\n")
+            self.retry_null_downloads(null_dl)
+
+    def retry_null_downloads(self, null_dl):
+        self.epi = ','.join(null_dl)
+        self.driver = self.setup_driver()
+        self.download_links(os.getenv('EMAIL'), os.getenv('PASSWORD'))
+        self.download()
+        self.update_dl_list()
+
+    def update_dl_list(self):
+        with open('dl_list.txt', 'r+') as file:
+            lines = file.readlines()
+            file.seek(0)
+            file.writelines(line for line in lines if not (self.keyword in line and self.epi in line))
+            file.truncate()
 
     @staticmethod
     def dl_list():
