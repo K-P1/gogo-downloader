@@ -1,47 +1,5 @@
-2025-06-17 23:34:58,208 - INFO - Initializing WebDriver
-2025-06-17 23:35:03,781 - ERROR - Download error: Message: Process unexpectedly closed with status 0
-
-2025-06-17 23:35:21,350 - INFO - Initializing WebDriver
-2025-06-17 23:35:27,619 - INFO - Attempting to login
-2025-06-17 23:35:28,551 - INFO - Closing WebDriver
-2025-06-17 23:35:33,033 - ERROR - Download error: Message: Unable to locate element: [name="email"]; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
-WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:199:5
-NoSuchElementError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:552:5
-dom.find/</<@chrome://remote/content/shared/DOM.sys.mjs:136:16
-
-2025-06-17 23:36:39,851 - INFO - Initializing WebDriver
-2025-06-17 23:36:45,847 - INFO - Attempting to login
-2025-06-17 23:36:49,787 - INFO - Closing WebDriver
-2025-06-17 23:36:53,066 - ERROR - Download error: Message: Unable to locate element: [name="email"]; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
-WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:199:5
-NoSuchElementError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:552:5
-dom.find/</<@chrome://remote/content/shared/DOM.sys.mjs:136:16
-
-2025-06-17 23:46:04,123 - INFO - Initializing WebDriver
-2025-06-17 23:46:10,247 - INFO - Attempting to login
-2025-06-17 23:46:15,174 - ERROR - Login failed: Message: Unable to locate element: [name="email"]; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
-WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:199:5
-NoSuchElementError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:552:5
-dom.find/</<@chrome://remote/content/shared/DOM.sys.mjs:136:16
-
-2025-06-17 23:46:15,177 - INFO - Closing WebDriver
-2025-06-17 23:46:18,439 - ERROR - Single download failed: Message: Unable to locate element: [name="email"]; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
-WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:199:5
-NoSuchElementError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:552:5
-dom.find/</<@chrome://remote/content/shared/DOM.sys.mjs:136:16
-
-2025-06-17 23:46:18,442 - ERROR - Batch download failed for naruto-dub: Message: Unable to locate element: [name="email"]; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
-WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:199:5
-NoSuchElementError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:552:5
-dom.find/</<@chrome://remote/content/shared/DOM.sys.mjs:136:16
-
+2025-06-18 00:14:44,082 - INFO - Initializing WebDriver
+2025-06-18 00:14:50,081 - INFO - Scraping links for naruto-dub
+2025-06-18 00:14:57,528 - ERROR - No valid download link found for episode 1 with quality 3
+2025-06-18 00:14:57,530 - WARNING - No valid links found for naruto-dub episodes 1
+2025-06-18 00:14:57,531 - INFO - Closing WebDriver

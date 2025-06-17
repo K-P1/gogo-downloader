@@ -1,5 +1,5 @@
 # gogo-downloader
-# note: some of these information may or maynot be accurate for newer versions released.
+# note: THIS PROJECT HAS BEEN DISCONTINUED DUE TO THE RECENT BAN ON ANIME WEBSITES. :(
 Anime Episode Downloader
 ========================
 
